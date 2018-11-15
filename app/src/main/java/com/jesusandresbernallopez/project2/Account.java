@@ -9,6 +9,7 @@
 package com.jesusandresbernallopez.project2;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Account {
 
@@ -19,9 +20,22 @@ public class Account {
     private String password;
     private boolean update;
 
-    public Account() {
+    public Account(String s) {
+        reservations = new ArrayList<>();
         update = false;
+        StringTokenizer st = new StringTokenizer(s);
+        customerName = st.nextToken();
+        id = Integer.parseInt(st.nextToken());
+        username = st.nextToken();
+        password = st.nextToken();
+        while (st.hasMoreTokens()) {
+            int r = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
+            String f = st.nextToken();
+            newReservation(n, f, r);
+        }
     }
+
 
     public String getCustomerName() {
         return customerName;
