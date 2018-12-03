@@ -9,6 +9,7 @@
 package com.jesusandresbernallopez.project2;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Account {
 
@@ -19,9 +20,29 @@ public class Account {
     private String password;
     private boolean update;
 
-    public Account() {
-        update = false;
+    public Account(String s) {
+        //TODO:Properly parse through s for ID, then query to see if they exist
+        //TODo:If false, create new customer
+
+        String q = "SELECT * FROM customers WHERE " + s;
+        String l = Database.lookup(q);
+        if (l == "false") {
+            reservations = new ArrayList<>();
+            update = false;
+            StringTokenizer st = new StringTokenizer(s);
+            customerName = st.nextToken();
+            id = Integer.parseInt(st.nextToken());
+            username = st.nextToken();
+            password = st.nextToken();
+            while (st.hasMoreTokens()) {
+                int r = Integer.parseInt(st.nextToken());
+                int n = Integer.parseInt(st.nextToken());
+                String f = st.nextToken();
+                newReservation(n, f, r);
+            }
+        }
     }
+
 
     public String getCustomerName() {
         return customerName;
@@ -31,7 +52,25 @@ public class Account {
         return id;
     }
 
+    public ArrayList<Reservation> getAllReservations() {
+        return reservations;
+    }
+
+    public Reservation getReservation(int rID) {
+        if (this.reservations.contains(rID)) {
+            return reservations.get(rID);
+        } else {
+            return null;
+        }
+    }
+
+    public boolean deleteAccount() {
+        String s = "DELETE FROM customers WHERE ID=" + this.id;
+        return Database.delete(s);
+    }
+
     public void newReservation(int n, String f, int r) {
+
         reservations.add(new Reservation(n, f, r));
     }
 
@@ -44,17 +83,20 @@ public class Account {
     }
 
     public boolean updateUser(String s) {
-        if (Database.userlookup()) {
-            return false;
-        }
+        //if (Database.userlookup() != "") {
+        //    return false;
+        //  }
         username = s;
         update = true;
         return true;
     }
 
-    public void updatePass(String s) {
-        password = s;
+    //sets this instance's password to new pass and updates flag to force instance update in DB.
+    public boolean updatePass(String s) {
         update = true;
+        //TODO: Fix this query to be properly parsed
+        String q = "UPDATE customers WHERE ID=" + this.id;
+        return Database.update(q);
     }
 
     public boolean writeToDB() {
@@ -64,7 +106,7 @@ public class Account {
         if (update) {
             String q;
             q = "update customers " + customerName + ", " + username + ", " + ", " + " where id = " + id;
-            return Database.insert(q);
+            return Database.update(q);
         }
         return true;
     }
