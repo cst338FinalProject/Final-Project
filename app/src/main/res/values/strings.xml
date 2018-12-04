@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">Project2</string>
+    <string name="app_name">Project 2</string>
+    <string name="create_account">Create Account</string>
+    <string name="reserve_seat">Reserve Seat</string>
+    <string name="cancel_reservation">Cancel Reservation</string>
+    <string name="manage_system">Manage System</string>
+    <string name="title_activity_create">CreateActivity</string>
+    <string name="title_activity_reserve_seat">ReserveSeat</string>
+    <string name="title_activity_cancel_reservation">CancelReservation</string>
+    <string name="title_activity_manage_system">ManageSystem</string>
 </resources>
