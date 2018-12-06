@@ -11,4 +11,39 @@
         android:text="@string/reserve_seat"
         android:textAlignment="center"/>
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:textAlignment="center"
+        android:hint="@string/departure"
+        android:id="@+id/departureEditText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:textAlignment="center"
+        android:hint="@string/arrival"
+        android:id="@+id/arrivalEditText" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:textAlignment="center"
+        android:inputType="number"
+        android:hint="@string/ticket_total"
+        android:id="@+id/numberOfTickets" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:text="@string/okay"
+        android:textAlignment="center"
+        android:id="@+id/checkButton"/>
 </LinearLayout>
