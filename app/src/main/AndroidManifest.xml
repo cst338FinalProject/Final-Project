@@ -16,6 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".CreateActivity"
+            android:label="@string/title_activity_create"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReserveSeat"
+            android:label="@string/title_activity_reserve_seat"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CancelReservation"
+            android:label="@string/title_activity_cancel_reservation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ManageSystem"
+            android:label="@string/title_activity_manage_system"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SystemLogs"
+            android:label="@string/title_activity_system_logs"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
