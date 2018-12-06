@@ -8,4 +8,11 @@
     <string name="title_activity_reserve_seat">ReserveSeat</string>
     <string name="title_activity_cancel_reservation">CancelReservation</string>
     <string name="title_activity_manage_system">ManageSystem</string>
+    <string name="username_placeholder">Username</string>
+    <string name="password_placeholder">Password</string>
+    <string name="okay">Okay</string>
+    <string name="departure">Departure</string>
+    <string name="arrival">Arrival</string>
+    <string name="ticket_total">Tickets</string>
+    <string name="title_activity_system_logs">SystemLogs</string>
 </resources>

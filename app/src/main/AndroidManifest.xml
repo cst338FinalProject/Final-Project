@@ -31,6 +31,10 @@
         <activity
             android:name=".ManageSystem"
             android:label="@string/title_activity_manage_system"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SystemLogs"
+            android:label="@string/title_activity_system_logs"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

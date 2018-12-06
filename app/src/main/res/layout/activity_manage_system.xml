@@ -10,4 +10,31 @@
         android:textSize="32pt"
         android:text="@string/manage_system"
         android:textAlignment="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/username_placeholder"
+        android:textAlignment="center"
+        android:id="@+id/usernameEditText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/password_placeholder"
+        android:textAlignment="center"
+        android:inputType="textPassword"
+        android:id="@+id/passwordEditText"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:text="@string/okay"
+        android:textAlignment="center"
+        android:id="@+id/checkButton"/>
 </LinearLayout>
