@@ -8,7 +8,7 @@
 
 package com.jesusandresbernallopez.project2;
 
-public class Account extends Database {
+public class Account {
 
     private String username;
     private String password;
@@ -31,7 +31,7 @@ public class Account extends Database {
 
         String s = "SELECT * FROM customer WHERE uname = " + uname + ";";
 
-        super.lookup(s);
+        db.lookup(s);
 
     }
 
