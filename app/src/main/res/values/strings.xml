@@ -11,6 +11,7 @@
     <string name="username_placeholder">Username</string>
     <string name="password_placeholder">Password</string>
     <string name="okay">Okay</string>
+    <string name="search_flight">Search Flight</string>
     <string name="departure">Departure</string>
     <string name="arrival">Arrival</string>
     <string name="ticket_total">Tickets</string>
