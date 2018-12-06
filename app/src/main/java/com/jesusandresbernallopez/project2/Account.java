@@ -8,20 +8,35 @@
 
 package com.jesusandresbernallopez.project2;
 
-import java.util.ArrayList;
-import java.util.StringTokenizer;
+public class Account extends Database {
 
-public class Account {
-
-    private String customerName;
-    private int id;
-    private ArrayList<Reservation> reservations;
     private String username;
     private String password;
-    private boolean update;
+    private Database db;
 
-    public Account(String s) {
-        //TODO:Properly parse through s for ID, then query to see if they exist
+    public Account(Database d) {
+        db = d;
+    }
+
+    public void createAccount(String uname, String pass;) {
+        this.username = uname;
+        this.password = pass;
+    }
+
+    public void custLookup(int id) {
+
+    }
+
+    public void verifyCust(String uname, String pass) {
+
+        String s = "SELECT * FROM customer WHERE uname = " + uname + ";";
+
+        super.lookup(s);
+
+    }
+
+
+/**     //TODO:Properly parse through s for ID, then query to see if they exist
         //TODo:If false, create new customer
 
         String q = "SELECT * FROM customers WHERE " + s;
@@ -110,4 +125,7 @@ public class Account {
         }
         return true;
     }
+ **/
+
+
 }
