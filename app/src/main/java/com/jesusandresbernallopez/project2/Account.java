@@ -18,7 +18,7 @@ public class Account {
         db = d;
     }
 
-    public void createAccount(String uname, String pass;) {
+    public void createAccount(String uname, String pass) {
         this.username = uname;
         this.password = pass;
     }

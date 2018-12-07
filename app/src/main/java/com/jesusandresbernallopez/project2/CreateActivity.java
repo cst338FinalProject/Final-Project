@@ -1,15 +1,19 @@
 package com.jesusandresbernallopez.project2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,7 +22,6 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         Button checkButton = findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
-
     }
 
     @Override
@@ -34,9 +37,30 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
             B. Send to home page
         */
         if(v.getId() == R.id.checkButton){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final Intent intent = new Intent(this, MainActivity.class);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startActivity(intent);
+                }
+            });
+
+            Boolean a = false;
+            // TODO: Check that the customer information is correct
+            if(a){
+                builder.setTitle("Success");
+                builder.setMessage("Your account was created.");
+            }else{
+                builder.setTitle("Fail");
+                builder.setMessage("You suck.");
+            }
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
+
+
 
 }
