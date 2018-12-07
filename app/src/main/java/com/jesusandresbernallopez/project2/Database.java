@@ -13,10 +13,12 @@ public class Database extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
+    //Note: This isn't a persistent database since it wasn't in the project spec.
+
     public Database(Context context) {
         super(context, "database", null, 0);
-    }
 
+    }
 
     //Takes a string with precrafted sql insert statement. This function is simply handling whether insert pass/fail
     public boolean insert(String s) {
@@ -144,30 +146,25 @@ public class Database extends SQLiteOpenHelper {
         s = "CREATE TABLE customers (\n" +
                 "id          integer primary key autoincrement,\n" +
                 "password    varchar(16) not null,\n" +
-                "username    varchar(16) not null unique,\n" +
-                "admin       boolean);";
+                "username    varchar(16) not null unique);";
 
         db.execSQL(s);
 
         /**Project spec wants default admin generated...**/
-        s = "INSERT INTO customers (name, email, password, username, admin)" +
-                " VALUES(\"admin\", \"admin@admin.admin\", \"!admiM2\", \"!admiM2\", true);";
+        s = "INSERT INTO customers (password, username) VALUES(\"!admiM2\", \"!admiM2\");";
 
         db.execSQL(s);
 
         /**Project spec wants pre-generated accounts added**/
-        s = "INSERT INTO customers (name, email, password, username, admin) VALUES(\"Alice\", \"alice@csumb.edu\", " +
-                "\"@cSit100\", \"A@lice5\", false);";
+        s = "INSERT INTO customers (password, username) VALUES(\"@cSit100\", \"A@lice5\");";
 
         db.execSQL(s);
 
-        s = "INSERT INTO customers (name, email, password, username, admin) VALUES(\"Brian\", \"brian@csumb.edu\"," +
-                "\"123aBc##\", \"$BriAn7\", false);";
+        s = "INSERT INTO customers (password, username) VALUES(\"123aBc##\", \"$BriAn7\");";
 
         db.execSQL(s);
 
-        s = "INSERT INTO customers (name, email, password, username, admin) VALUES(\"Chris\", \"chris@csumb.edu\"," +
-                "\"CHrIS12!!\", \"!chriS12!\", false);";
+        s = "INSERT INTO customers (password, username) VALUES(\"CHrIS12!!\", \"!chriS12!\");";
 
         db.execSQL(s);
 
@@ -222,9 +219,9 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
         /**
-         * Since we are not implementing upgrades of this database due to being a class assignment
-         * This method will be empty. If this is to be expanded on (it wont)
-         * pass in the database, the version numerial and the upgraded version numerial.
+         * Since we are not implementing upgrades of this database due to being a class assignment,
+         * this method will be empty. If this is to be expanded on (it wont)
+         * pass in the database, the version numeral and the upgraded version numeral.
          * **/
 
     }
