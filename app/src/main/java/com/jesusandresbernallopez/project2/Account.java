@@ -10,30 +10,32 @@ package com.jesusandresbernallopez.project2;
 
 public class Account {
 
-    private String username;
-    private String password;
-    private Database db;
-
     public Account(Database d) {
-        db = d;
     }
 
-    public void createAccount(String uname, String pass) {
-        this.username = uname;
-        this.password = pass;
-    }
+    public void createAccount(String uname, String pass, Database db) {
 
-    public void custLookup(int id) {
+        String s = "INSERT INTO customers (username, password) VALUES (" + uname + ", " + pass + ");";
+        db.insert(s);
 
     }
 
-    public void verifyCust(String uname, String pass) {
+    public boolean verifyCust(String uname, String pass, Database db) {
 
-        String s = "SELECT * FROM customer WHERE uname = " + uname + ";";
+        String s = "SELECT * FROM customer WHERE username = " + uname + ";";
 
-        db.lookup(s);
+        String r = db.lookup(s);
+
+        return r.contains(pass);
 
     }
+
+    public boolean adminVerify(String uname, String pass) {
+        return uname == "!admiM2" && pass == "!admiM2";
+    }
+}
+
+
 
 
 /**     //TODO:Properly parse through s for ID, then query to see if they exist
@@ -126,6 +128,3 @@ public class Account {
         return true;
     }
  **/
-
-
-}
