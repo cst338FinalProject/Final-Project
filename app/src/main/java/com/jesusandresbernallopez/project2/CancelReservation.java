@@ -1,9 +1,11 @@
 package com.jesusandresbernallopez.project2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -33,8 +35,28 @@ public class CancelReservation extends AppCompatActivity implements View.OnClick
 
          */
         if(v.getId() == R.id.checkButton){
-            Intent i = new Intent(this, MainActivity.class);
-            startActivity(i);
+            // if customer has reservation
+            // send to another view with customer's reservations
+            // else
+            final Intent intent = new Intent(this, MainActivity.class);
+            AlertDialog.Builder builder = new  AlertDialog.Builder(this);
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startActivity(intent);
+                }
+            });
+            Boolean a = true;
+            if(a/*If customer has no reservations*/){
+                builder.setTitle("Fail");
+                builder.setMessage("Sorry, no reservation with the entered credentials.");
+            }else{ // display reservations that the customer has
+
+            }
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
         }
     }
 
