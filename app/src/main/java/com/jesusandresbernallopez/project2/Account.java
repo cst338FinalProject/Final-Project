@@ -4,6 +4,10 @@ import android.database.Cursor;
 
 public class Account {
 
+    public Account(){
+
+    }
+
     public Account(Database d) {
     }
 
@@ -25,7 +29,7 @@ public class Account {
     }
 
     public boolean adminVerify(String uname, String pass) {
-        return uname == "!admiM2" && pass == "!admiM2";
+        return uname.equals("!admiM2") && pass.equals("!admiM2");
     }
 
     public Cursor dispLog(Database db) {

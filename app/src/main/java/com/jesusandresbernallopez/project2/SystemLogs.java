@@ -13,7 +13,8 @@ public class SystemLogs extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_logs);
-
+        // button allowing admin to add a new flight
+    // we will display a scrollable screen that has a transaction history with a confirmation button
     }
 
 }
