@@ -63,7 +63,8 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
         // i < theNumberOf AvailableFlights
         for(int i = 0; i < 2; i++){
             Button b = new Button(this);
-            b.setText("BLAH");
+            // the text will be the available flights
+            b.setText("Available Flight: " + Integer.toString(i + 1));
             b.setId(i);
             b.setOnClickListener(this);
             layout.addView(b);
