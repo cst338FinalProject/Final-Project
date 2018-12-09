@@ -178,6 +178,8 @@ public class Database extends SQLiteOpenHelper {
                 "price        decimal not null,\n" +
                 "primary key (name));";
 
+        db.execSQL(s); // crashed with no flights prior to adding this
+
         /**Project spec wants default generated flights**/
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
                 " VALUES (\"Otter101\", \"Monterey\", \"Los Angeles\", 1030, 10, 150.00, 0);";
@@ -207,9 +209,9 @@ public class Database extends SQLiteOpenHelper {
         /**Reservation Table Schema**/
         s = "CREATE TABLE reservations(\n" +
                 "id          integer primary key autoincrement,\n" +
-                "seatsReq    integer not null,\n" +
-                "foreign key (flight_name) references flights (name) on delete cascade,\n" +
-                "foreign key (customer_id) references customers (id) on delete cascade);";
+                "seatsReq    integer not null);";// + //
+//                "foreign key (flight_name) references flights (name) on delete cascade,\n" +
+//                "foreign key (customer_id) references customers (id) on delete cascade);";
 
         db.execSQL(s);
 
