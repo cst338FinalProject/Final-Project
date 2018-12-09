@@ -3,11 +3,10 @@ package com.jesusandresbernallopez.project2;
 class Reservation {
 
     public Reservation() {
-
     }
 
     public boolean newReservation(Database db, String uname, String pass, int numSeats, String flightName) {
-        String s = "SELECT * FROM customer WHERE uname = " + uname;
+        String s = "SELECT * FROM customer WHERE username = " + uname;
         String r = db.lookup(s);
 
         if (r.contains(uname) && r.contains(pass)) {

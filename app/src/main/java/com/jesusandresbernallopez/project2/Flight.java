@@ -1,14 +1,15 @@
 package com.jesusandresbernallopez.project2;
 
 public class Flight {
-    String name;
-    int reservedSeats;
-    int capacity;
 
-    public Flight(String s, int c) {
-        this.reservedSeats = 0;
-        this.name = s;
-        this.capacity = c;
+    public Flight() {
+    }
+
+    public void flightSearch(int tickets, String dLoc, String aLoc, Database db) {
+
+        String s = "SELECT * FROM flights WHERE capacity = " + tickets + " AND departLoc = " + dLoc + " AND arriveLoc = " + aLoc + ";";
+
+        db.lookup(s);
     }
 
     public boolean reserveSeat(int i) {
