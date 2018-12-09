@@ -13,14 +13,10 @@ public class Database extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
 
-    //Note: This isn't a persistent database since it wasn't in the project spec.
-
     public Database(Context context) {
         super(context, "database", null, 0);
-
     }
 
-    //Takes a string with precrafted sql insert statement. This function is simply handling whether insert pass/fail
     public boolean insert(String s) {
 
         db = getWritableDatabase();
@@ -45,7 +41,12 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    //Takes a string with precrafted sql query. This function returns the resultant.
+    public Cursor logLookUp(String s) {
+        db = getReadableDatabase();
+
+        return db.rawQuery(s, null);
+    }
+
     public String lookup(String s) {
 
         db = getReadableDatabase();
@@ -130,8 +131,6 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        //TODO:Add triggers on each of the other tables to auto-populate log table
-
         /**Log Table Schema**/
 
         String s = "CREATE TABLE log (" +
@@ -213,16 +212,48 @@ public class Database extends SQLiteOpenHelper {
                 "foreign key (customer_id) references customers (id) on delete cascade);";
 
         db.execSQL(s);
+
+        /** Getting T R I G G E R E D **/
+
+        s = "CREATE TRIGGER cust_mod AFTER UPDATE ON customers BEGIN INSERT INTO log(event, timestamp) VALUES('update customers', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER flight_mod AFTER UPDATE ON flights BEGIN INSERT INTO log(event, timestamp) VALUES('udpate flight', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER res_mod AFTER UPDATE ON reservvations BEGIN INSERT INTO log(event, timestamp) VALUES('update reservation', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER new_cust AFTER INSERT ON customers BEGIN INSERT INTO log(event, timestamp) VALUES ('new customer', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER new_res AFTER INSERT ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES ('new reservation', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER new_flight AFTER INSERT ON flights BEGIN INSERT INTO log(event, timestamp) VALUES ('new flight', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER del_cust AFTER DELETE ON customers BEGIN INSERT INTO log(event, timestamp) VALUES ('customer deleted', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER del_flight AFTER DELETE ON flights BEGIN INSERT INTO log(event, timestamp) VALUES ('flight deleted', datetime('NOW')); END;";
+
+        db.execSQL(s);
+
+        s = "CREATE TRIGGER del_res AFTER DELETE ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES ('reservation deleted', datetime('NOW')); END;";
+
+        db.execSQL(s);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
-        /**
-         * Since we are not implementing upgrades of this database due to being a class assignment,
-         * this method will be empty. If this is to be expanded on (it wont)
-         * pass in the database, the version numeral and the upgraded version numeral.
-         * **/
-
+        //Not implemented on purpose, the DB will never be upgraded in this project.
     }
 }
