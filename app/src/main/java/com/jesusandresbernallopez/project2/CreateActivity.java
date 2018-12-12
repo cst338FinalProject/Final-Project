@@ -24,6 +24,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         Button checkButton = findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -53,19 +54,16 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                 }
             });
 
-            if(username.equals("!admiM2")/* || check that username and password are valid entries || username is not available*/){
+            Database db = new Database(getBaseContext());
+
+            Account account = new Account(db);
+            if(!account.createAccount(username, password, db)){
                 builder.setTitle("Fail");
                 builder.setMessage("Account already exists.");
-            }else{ // new account can be created and you are good to go
-                Database db = new Database(this);
-                Account account = new Account(db);
-                Log.d("Account", "No Success but at least it reached here\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-
-                account.createAccount(username, password, db);
-                builder.setTitle("Success");
-                builder.setMessage("Your account was created.");
             }
 
+            builder.setTitle("Success");
+            builder.setMessage("Your account was created.");
             AlertDialog dialog = builder.create();
             dialog.show();
         }

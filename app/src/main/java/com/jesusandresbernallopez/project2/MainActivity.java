@@ -1,6 +1,7 @@
 package com.jesusandresbernallopez.project2;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,10 +26,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button manageSystem = findViewById(R.id.manageSystem);
         manageSystem.setOnClickListener(this);
+
     }
 
     @Override
     public void onClick(View v){
+
         if(v.getId() == R.id.createAccount){
             Intent i = new Intent(this, CreateActivity.class);
             startActivity(i);
