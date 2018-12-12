@@ -1,5 +1,7 @@
 package com.jesusandresbernallopez.project2;
 
+import java.util.ArrayList;
+
 class Reservation {
 
     public Reservation() {
@@ -7,7 +9,7 @@ class Reservation {
 
     public boolean newReservation(Database db, String uname, String pass, int numSeats, String flightName) {
         String s = "SELECT * FROM customer WHERE username = " + uname;
-        String r = db.lookup(s);
+        ArrayList<String> r = db.lookup(s);
 
         if (r.contains(uname) && r.contains(pass)) {
             //TODO: Create new reservation, return reservation id.

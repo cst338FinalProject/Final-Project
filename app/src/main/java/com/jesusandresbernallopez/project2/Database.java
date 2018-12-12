@@ -14,31 +14,34 @@ public class Database extends SQLiteOpenHelper {
     SQLiteDatabase db;
 
     public Database(Context context) {
-        super(context, "database", null, 0);
+        super(context, "database", null, 1);
     }
 
     public boolean insert(String s) {
 
         db = getWritableDatabase();
+        db.execSQL(s);
+        Log.d("Success", "ok");
+        return true;
 
-        try {
-            if (s.contains("\"; ")) {
-                Log.d("SQL Injection", "User attempted custom SQL");
-                db.close();
-                return false;
-            }
-
-            db.execSQL(s);
-            db.close();
-
-            return true;
-
-        } catch (Exception e) {
-
-            db.close();
-
-            return false;
-        }
+//        try {
+//            if (s.contains("\"; ")) {
+//                Log.d("SQL Injection", "User attempted custom SQL");
+//                db.close();
+//                return false;
+//            }
+//
+//            db.execSQL(s);
+//            db.close();
+//
+//            return true;
+//
+//        } catch (Exception e) {
+//
+//            db.close();
+//
+//            return false;
+//        }
     }
 
     public Cursor logLookUp(String s) {
@@ -47,7 +50,7 @@ public class Database extends SQLiteOpenHelper {
         return db.rawQuery(s, null);
     }
 
-    public String lookup(String s) {
+    public ArrayList<String> lookup(String s) {
 
         db = getReadableDatabase();
 
@@ -61,28 +64,16 @@ public class Database extends SQLiteOpenHelper {
         //TODO: Implementation is def broken so fix this. Only the logic is in place
 
         ArrayList<String> list = new ArrayList<>();
-        String r = new String();
         Cursor c = db.rawQuery(s, null);
-
-        for (int i = 0; ; i++) {
-
-            c.moveToNext();
-
-            if (c.isLast()) {
-                break;
-            }
-            list.add(c.getString(i));
-        }
-
+        StringBuilder sb = new StringBuilder();
+        int col = c.getColumnCount();
+        int row = c.getCount();
+        Log.d("Column", Integer.toString(col));
+        Log.d("Row", Integer.toString(row));
         c.close();
 
-        for (int i = 0; i < list.size(); i++) {
-            r = r + list.get(i) + "\n";
-        }
-
-
         db.close();
-        return r;
+        return list;
     }
 
     public boolean delete(String s) {
@@ -150,20 +141,20 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(s);
 
         /**Project spec wants default admin generated...**/
-        s = "INSERT INTO customers (password, username) VALUES(\"!admiM2\", \"!admiM2\");";
+        s = "INSERT INTO customers (password, username) VALUES('!admiM2', '!admiM2');";
 
         db.execSQL(s);
 
         /**Project spec wants pre-generated accounts added**/
-        s = "INSERT INTO customers (password, username) VALUES(\"@cSit100\", \"A@lice5\");";
+        s = "INSERT INTO customers (password, username) VALUES('@cSit100', 'A@lice5');";
 
         db.execSQL(s);
 
-        s = "INSERT INTO customers (password, username) VALUES(\"123aBc##\", \"$BriAn7\");";
+        s = "INSERT INTO customers (password, username) VALUES('123aBc##', '$BriAn7');";
 
         db.execSQL(s);
 
-        s = "INSERT INTO customers (password, username) VALUES(\"CHrIS12!!\", \"!chriS12!\");";
+        s = "INSERT INTO customers (password, username) VALUES('CHrIS12!!', '!chriS12!');";
 
         db.execSQL(s);
 
@@ -178,36 +169,40 @@ public class Database extends SQLiteOpenHelper {
                 "price        decimal not null,\n" +
                 "primary key (name));";
 
+        db.execSQL(s); // crashed with no flights prior to adding this
+
         /**Project spec wants default generated flights**/
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES (\"Otter101\", \"Monterey\", \"Los Angeles\", 1030, 10, 150.00, 0);";
+                " VALUES ('Otter101', 'Monterey', 'Los Angeles', 1030, 10, 150.00, 0);";
 
         db.execSQL(s);
 
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES (\"Otter102\", \"Los Angeles\", \"Monterey\", 1300, 10, 150.00, 0);";
+                " VALUES ('Otter102', 'Los Angeles', 'Monterey', 1300, 10, 150.00, 0);";
 
         db.execSQL(s);
 
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES (\"Otter201\", \"Monterey\", \"Seattle\", 1100, 5, 200.50, 0);";
+                " VALUES ('Otter201', 'Monterey', 'Seattle', 1100, 5, 200.50, 0);";
 
         db.execSQL(s);
 
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES (\"Otter205\", \"Monterey\", \"Seattle\", 1545, 15, 150.00, 0);";
+                " VALUES ('Otter205', 'Monterey', 'Seattle', 1545, 15, 150.00, 0);";
 
         db.execSQL(s);
 
         s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES (\"Otter202\", \"Seattle\", \"Monterey\", 1410, 5, 200.00, 0);";
+                " VALUES ('Otter202', 'Seattle', 'Monterey', 1410, 5, 200.00, 0);";
 
         db.execSQL(s);
 
         /**Reservation Table Schema**/
         s = "CREATE TABLE reservations(\n" +
                 "id          integer primary key autoincrement,\n" +
-                "seatsReq    integer not null,\n" +
+                "seatsReq    integer not null," +
+                "flight_name varchar(20),\n" +
+                "customer_id integer,\n" +
                 "foreign key (flight_name) references flights (name) on delete cascade,\n" +
                 "foreign key (customer_id) references customers (id) on delete cascade);";
 
@@ -223,7 +218,7 @@ public class Database extends SQLiteOpenHelper {
 
         db.execSQL(s);
 
-        s = "CREATE TRIGGER res_mod AFTER UPDATE ON reservvations BEGIN INSERT INTO log(event, timestamp) VALUES('update reservation', datetime('NOW')); END;";
+        s = "CREATE TRIGGER res_mod AFTER UPDATE ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES('update reservation', datetime('NOW')); END;";
 
         db.execSQL(s);
 

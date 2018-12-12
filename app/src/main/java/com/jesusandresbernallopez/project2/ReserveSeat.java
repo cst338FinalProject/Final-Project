@@ -14,9 +14,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class ReserveSeat extends AppCompatActivity implements View.OnClickListener{
 
@@ -46,7 +49,6 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
 //            startActivity(i);
         }
 
-        // i < theNumberOf AvailableFlights
         for(int i = 0; i < 5; i++){
             if(v.getId() == i){
                 Log.d("tag: \n", i + " ajksdnfamlenf\n\n\n\n\n");
@@ -60,11 +62,25 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         layout.setLayoutParams(params);
 
-        // i < theNumberOf AvailableFlights
-        for(int i = 0; i < 2; i++){
+        Database db = new Database(getBaseContext());
+        Flight flight = new Flight();
+
+        EditText departure = findViewById(R.id.departureEditText);
+        EditText arrival = findViewById(R.id.arrivalEditText);
+        EditText tickets = findViewById(R.id.numberOfTickets);
+        String t = tickets.getText().toString();
+
+        Log.d("Tickets:\n", tickets.getText().toString());
+        Log.d("Departure:\n", departure.getText().toString());
+        Log.d("Arrival:\n", arrival.getText().toString());
+
+        ArrayList<String> a = flight.flightSearch(Integer.valueOf(t),
+                departure.getText().toString(),
+                arrival.getText().toString() , db);
+
+        for(int i = 0; i < a.size(); i++){
             Button b = new Button(this);
-            // the text will be the available flights
-            b.setText("Available Flight: " + Integer.toString(i + 1));
+            b.setText("Available Flight: " + "ajsdfhaus"/*a.get(i)*/);
             b.setId(i);
             b.setOnClickListener(this);
             layout.addView(b);
