@@ -36,6 +36,10 @@
             android:name=".SystemLogs"
             android:label="@string/title_activity_system_logs"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ConfirmSeatReservation"
+            android:label="@string/title_activity_confirm_seat_reservation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

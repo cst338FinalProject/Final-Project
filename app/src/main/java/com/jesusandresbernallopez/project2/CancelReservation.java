@@ -3,13 +3,14 @@ package com.jesusandresbernallopez.project2;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import java.util.ArrayList;
 
 public class CancelReservation extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,12 +47,27 @@ public class CancelReservation extends AppCompatActivity implements View.OnClick
                     startActivity(intent);
                 }
             });
-            Boolean a = true;
-            if(a/*If customer has no reservations*/){
+
+            EditText user = findViewById(R.id.usernameEditText);
+            EditText pass = findViewById(R.id.passwordEditText);
+            String username = user.getText().toString();
+            String password = pass.getText().toString();
+
+            Database db = new Database(getBaseContext());
+
+            Account account = new Account(db);
+            boolean b = account.verifyCust(username,password, db);
+
+            Log.d("Result", Boolean.toString(b));
+
+            Reservation reservation = new Reservation();
+
+            if(b){
+                builder.setTitle("69");
+                builder.setMessage("Nice");
+            }else{
                 builder.setTitle("Fail");
                 builder.setMessage("Sorry, no reservation with the entered credentials.");
-            }else{ // display reservations that the customer has
-
             }
 
             AlertDialog dialog = builder.create();

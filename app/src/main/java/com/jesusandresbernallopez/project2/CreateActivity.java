@@ -29,16 +29,6 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v){
-        /* TODO: Before sending user back to the home page
-        1. Verify the account(If any fail go to 2.)
-            A. Check account does not exist
-            B. Check the account username is formatted correctly
-            a. Inform customer account was created successfully
-            b. Send to home page
-        2. Display an error message
-            A. Customer confirms error message
-            B. Send to home page
-        */
         if(v.getId() == R.id.checkButton){
             EditText user = findViewById(R.id.usernameEditText);
             EditText pass = findViewById(R.id.passwordEditText);
@@ -60,10 +50,11 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
             if(!account.createAccount(username, password, db)){
                 builder.setTitle("Fail");
                 builder.setMessage("Account already exists.");
+            }else{
+                builder.setTitle("Success");
+                builder.setMessage("Your account was created.");
             }
 
-            builder.setTitle("Success");
-            builder.setMessage("Your account was created.");
             AlertDialog dialog = builder.create();
             dialog.show();
         }
