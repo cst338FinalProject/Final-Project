@@ -107,7 +107,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-
+        
         /**Log Table Schema**/
 
         String s = "CREATE TABLE log (" +

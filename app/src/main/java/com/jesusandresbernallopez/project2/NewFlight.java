@@ -59,9 +59,7 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
             builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    if(flightAdded){
                         startActivity(intent);
-                    }
                 }
             });
 
