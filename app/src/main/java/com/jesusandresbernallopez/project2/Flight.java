@@ -26,7 +26,7 @@ public class Flight {
 //           if (db.lookup(s) == null) {
 //               throw new Exception("fuck this");
 //           }
-        //return db.lookup(s);
+//        return db.lookup(s);
 //       }catch( Exception e){
 //           System.exit(69);
 //           return null;
