@@ -1,9 +1,18 @@
 package com.jesusandresbernallopez.project2;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
+/**
+ * "CREATE TABLE flights (\n" +
+ * "name         varchar(20) not null unique,\n" +
+ * "departLoc    varchar(20) not null,\n" +
+ * "destinLoc    varchar(20) not null,\n" +
+ * "departTime   integer,\n" +
+ * "flightCap    integer not null,\n" +
+ * "price        decimal not null,\n" +
+ * "claimedSeats integer not null,\n" +
+ * "primary key (name));";
+ **/
 public class Flight {
 
     public Flight() {
@@ -17,11 +26,12 @@ public class Flight {
 //           if (db.lookup(s) == null) {
 //               throw new Exception("fuck this");
 //           }
-           return db.lookup(s);
+        //return db.lookup(s);
 //       }catch( Exception e){
 //           System.exit(69);
 //           return null;
 //        }
+        return null;
     }
 
     public boolean reserveSeat(int i) {

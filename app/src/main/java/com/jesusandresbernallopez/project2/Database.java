@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.util.ArrayList;
-
 public class Database extends SQLiteOpenHelper {
 
     SQLiteDatabase db;
@@ -49,7 +47,7 @@ public class Database extends SQLiteOpenHelper {
         return db.rawQuery(s, null);
     }
 
-    public ArrayList<String> lookup(String s) {
+    public Cursor lookup(String s) {
 
         db = getReadableDatabase();
 
@@ -58,34 +56,9 @@ public class Database extends SQLiteOpenHelper {
             db.close();
             return null;
         }
-
-        //TODO: using a cursor obj, iterate through and parse resultant string r
-        //TODO: Implementation is def broken so fix this. Only the logic is in place
-
-        ArrayList<String> list = new ArrayList<>();
         Cursor c = db.rawQuery(s, null);
-        StringBuilder sb = new StringBuilder();
-        int col = c.getColumnCount();
-        int row = c.getCount();
-
-        for(int i = 0; i < row; i++){
-            c.moveToNext();
-            for(int j = 0; j < col; j++){
-                try{
-                    sb.append(c.getString(j) + ",");
-//                    Log.d("String", c.getString(j));
-                }catch (Exception e){
-                    sb.append(Integer.toString(c.getInt(j)) + ",");
-//                    Log.d("String", Integer.toString(c.getInt(j)));
-                }
-            }
-            list.add(sb.toString());
-            sb = new StringBuilder();
-        }
-        c.close();
-
         db.close();
-        return list;
+        return c;
     }
 
     public boolean delete(String s) {
