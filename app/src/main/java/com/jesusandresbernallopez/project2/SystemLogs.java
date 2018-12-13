@@ -29,8 +29,6 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v){
-        EditText flightNum = new EditText(this);
-
         if(v.getId() == R.id.selectedYes){
             Intent i = new Intent(this, NewFlight.class);
             startActivity(i);
