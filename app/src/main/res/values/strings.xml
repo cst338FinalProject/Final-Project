@@ -18,4 +18,14 @@
     <string name="title_activity_system_logs">SystemLogs</string>
     <string name="title_activity_choose_flight">ChooseFlight</string>
     <string name="title_activity_confirm_seat_reservation">ConfirmSeatReservation</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="create_flight">Would you like to create a flight?</string>
+    <string name="title_activity_new_flight">NewFlight</string>
+    <string name="flight_number">Flight Number</string>
+    <string name="departure_time">Departure Time</string>
+    <string name="flight_capacity">Flight Capacity</string>
+    <string name="price">Price</string>
+    <string name="add_flight">Add Flight</string>
+
 </resources>

@@ -57,7 +57,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             String price = st.nextToken();
             String numOfTickets = getIntent().getExtras().getString("Tickets");
 
-            boolean reserve = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
+            boolean reserveSucccesful = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final Intent intent = new Intent(this, MainActivity.class);
@@ -78,7 +78,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                     "Total amount: " + price;
 
 
-            if (reserve){
+            if (reserveSucccesful){
                 builder.setMessage(message);
             }else{
                 builder.setMessage("You tried but failed");
