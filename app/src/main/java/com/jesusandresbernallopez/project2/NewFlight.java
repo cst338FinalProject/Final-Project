@@ -1,8 +1,11 @@
 package com.jesusandresbernallopez.project2;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -46,11 +49,34 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
             Flight flight = new Flight();
             Database db = new Database(getBaseContext());
 
-            flight.addFlight(flightNumber, departure, arrival, Integer.valueOf(departureTime),
+            final boolean flightAdded = flight.addFlight(flightNumber, departure, arrival, Integer.valueOf(departureTime),
                     Integer.valueOf(flightCap), Integer.valueOf(price), db);
 
-            Log.d("Flight", flightNumber + " " +departure + " " + arrival + " " + departureTime + " "
-             + flightCap + " " + price);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            final Intent intent = new Intent(this, MainActivity.class);
+
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if(flightAdded){
+                        startActivity(intent);
+                    }
+                }
+            });
+
+           if(flightAdded){
+               builder.setTitle("Success");
+               builder.setMessage("Flight has been added");
+           }else{
+               builder.setTitle("Failure");
+               builder.setMessage("Check information and try again.");
+           }
+
+           AlertDialog dialog = builder.create();
+           dialog.show();
+
+
         }
     }
 }

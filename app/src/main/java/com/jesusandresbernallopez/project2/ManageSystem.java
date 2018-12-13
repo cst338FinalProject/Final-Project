@@ -51,7 +51,7 @@ public class ManageSystem extends AppCompatActivity implements View.OnClickListe
                 builder.setMessage("Check username and password and try again.");
 
                 AlertDialog dialog = builder.create();
-                dialog.show();;
+                dialog.show();
             }
 
 
