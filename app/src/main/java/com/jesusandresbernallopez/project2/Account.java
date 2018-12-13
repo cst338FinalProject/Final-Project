@@ -15,15 +15,6 @@ public class Account {
     }
 
     public boolean createAccount(String uname, String pass, Database db) {
-
-        String st = "SELECT * FROM customers;";//"SELECT username, password FROM customers WHERE username = '" + uname + "';";
-        Log.d("test", Integer.toString(db.lookup(st).size()));
-        if(db.lookup(st).size() != 0){
-            //checks to make sure user doesn't exist already.
-            Log.d("Error creating account", "Account already exist");
-            return false;
-        }
-
         String s = "INSERT INTO customers (password, username) VALUES('" + pass + "', '" + uname +"');";
 
         return db.insert(s);
@@ -32,9 +23,10 @@ public class Account {
 
     public boolean verifyCust(String uname, String pass, Database db) {
 
-        String s = "SELECT * FROM customer WHERE username = '" + uname + "';";
+        String s = "SELECT * FROM customers WHERE username = '" + uname + "';";
 
         ArrayList<String> r = db.lookup(s);
+        Log.d("Result", r.get(0));
 
         return r.contains(pass);
 

@@ -17,4 +17,5 @@
     <string name="ticket_total">Tickets</string>
     <string name="title_activity_system_logs">SystemLogs</string>
     <string name="title_activity_choose_flight">ChooseFlight</string>
+    <string name="title_activity_confirm_seat_reservation">ConfirmSeatReservation</string>
 </resources>
