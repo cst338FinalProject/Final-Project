@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/flight_number"
+        android:textAlignment="center"
+        android:id="@+id/flightNumber"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/departure"
+        android:textAlignment="center"
+        android:id="@+id/departureEditText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/arrival"
+        android:textAlignment="center"
+        android:id="@+id/arrivalEditText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/departure_time"
+        android:textAlignment="center"
+        android:id="@+id/departureTimeEditText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/flight_capacity"
+        android:textAlignment="center"
+        android:id="@+id/flightCapacityEditText"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8pt"
+        android:textSize="12pt"
+        android:hint="@string/price"
+        android:textAlignment="center"
+        android:id="@+id/priceEditText"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_flight"
+        android:textAlignment="center"
+        android:id="@+id/addFlightButton"/>
+</LinearLayout>

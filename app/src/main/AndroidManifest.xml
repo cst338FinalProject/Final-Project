@@ -39,6 +39,10 @@
         <activity
             android:name=".ConfirmSeatReservation"
             android:label="@string/title_activity_confirm_seat_reservation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewFlight"
+            android:label="@string/title_activity_new_flight"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

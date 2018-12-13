@@ -32,4 +32,12 @@ public class Flight {
         }
 
     }
+
+    public boolean addFlight(String name, String dep, String arriv, int time, int cap, int price, Database db){
+
+        String s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
+                " VALUES ('"+ name + "', '" + dep +"', '"+ arriv +"', " + time + ", " + cap + ", " + price + ", 0);";
+
+        return db.insert(s);
+    }
 }
