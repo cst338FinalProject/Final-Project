@@ -55,7 +55,7 @@ public class CancelReservation extends AppCompatActivity implements View.OnClick
 
             Database db = new Database(getBaseContext());
 
-            Account account = new Account(db);
+            Account account = new Account();
             boolean b = account.verifyCust(username,password, db);
 
             Log.d("Result", Boolean.toString(b));

@@ -1,6 +1,9 @@
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
+import android.util.Log;
+
+import java.util.regex.Pattern;
 
 /**
  * "CREATE TABLE customers (\n" +
@@ -15,8 +18,44 @@ public class Account {
     }
 
     public boolean createAccount(String uname, String pass, Database db) {
+        String specialChar = "~`!@#$%^&*()-_=+\\\\|[{]};:'\\\",<.>/?";
+        String nums = "0123456789";
+        int count = 0, counter = 0;
+        boolean num = false, numTwo = false;
 
+        for(int i = 0; i < nums.length(); i++){
+            if(uname.contains(Character.toString(nums.charAt(i)))){
+                num = true;
+                break;
+            }
+        }
+
+        for(int i = 0; i < nums.length(); i++){
+            if(pass.contains(Character.toString(nums.charAt(i)))){
+                numTwo = true;
+                break;
+            }
+        }
+
+        for(int i = 0; i < specialChar.length(); i++){
+            if(uname.contains(Character.toString(specialChar.charAt(i)))){
+                count += 1;
+                break;
+            }
+        }
+
+        for(int i = 0; i < specialChar.length(); i++){
+            if(pass.contains(Character.toString(specialChar.charAt(i)))){
+                counter += 1;
+                break;
+            }
+        }
+
+        if (count == 0 || counter == 0 || !num || !numTwo){
+            return false;
+        }
         String s = "INSERT INTO customers (password, username) VALUES('" + pass + "', '" + uname +"');";
+        Log.d("SomethingThatIsObvious", "Account");
 
         return db.insert(s);
     }

@@ -97,5 +97,6 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
         layout.setOnClickListener(this);
 
         setContentView(layout);
+        Log.d("Pop", "at least it got here");
     }
 }
