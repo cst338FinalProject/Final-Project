@@ -20,28 +20,27 @@ public class Database extends SQLiteOpenHelper {
     public boolean insert(String s) {
 
         db = getWritableDatabase();
-        db.execSQL(s);
-        Log.d("Success", "ok");
-        return true;
+        Log.d("Not a good name", "ok");
 
-//        try {
-//            if (s.contains("\"; ")) {
-//                Log.d("SQL Injection", "User attempted custom SQL");
-//                db.close();
-//                return false;
-//            }
-//
-//            db.execSQL(s);
-//            db.close();
-//
-//            return true;
-//
-//        } catch (Exception e) {
-//
-//            db.close();
-//
-//            return false;
-//        }
+        try {
+            if (s.contains("\"; ")) {
+                Log.d("SQL Injection", "User attempted custom SQL");
+                db.close();
+                return false;
+            }
+
+            db.execSQL(s);
+            db.close();
+
+            return true;
+
+        } catch (Exception e) {
+
+            Log.d("Exception", e.getLocalizedMessage());
+            db.close();
+
+            return false;
+        }
     }
 
     public Cursor logLookUp(String s) {
@@ -68,8 +67,21 @@ public class Database extends SQLiteOpenHelper {
         StringBuilder sb = new StringBuilder();
         int col = c.getColumnCount();
         int row = c.getCount();
-        Log.d("Column", Integer.toString(col));
-        Log.d("Row", Integer.toString(row));
+
+        for(int i = 0; i < row; i++){
+            c.moveToNext();
+            for(int j = 0; j < col; j++){
+                try{
+                    sb.append(c.getString(j) + ",");
+//                    Log.d("String", c.getString(j));
+                }catch (Exception e){
+                    sb.append(Integer.toString(c.getInt(j)) + ",");
+//                    Log.d("String", Integer.toString(c.getInt(j)));
+                }
+            }
+            list.add(sb.toString());
+            sb = new StringBuilder();
+        }
         c.close();
 
         db.close();
@@ -165,8 +177,8 @@ public class Database extends SQLiteOpenHelper {
                 "destinLoc    varchar(20) not null,\n" +
                 "departTime   integer,\n" +
                 "flightCap    integer not null,\n" +
-                "claimedSeats integer not null,\n" +
                 "price        decimal not null,\n" +
+                "claimedSeats integer not null,\n" +
                 "primary key (name));";
 
         db.execSQL(s); // crashed with no flights prior to adding this

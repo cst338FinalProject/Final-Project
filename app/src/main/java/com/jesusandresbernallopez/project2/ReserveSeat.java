@@ -18,10 +18,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import java.util.StringTokenizer;
 
 import java.util.ArrayList;
 
 public class ReserveSeat extends AppCompatActivity implements View.OnClickListener{
+
+    ArrayList<String> a = new ArrayList<String>();
+    String delim = ",";
+    String numOfTickets = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,23 +40,26 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v){
-        /*
-            TODO: All the checking to make sure that customer is reserving seat
-            1. Pop up to show the customer possible flights
-            2. Customer picks one and then another popup/view shows up
-                for customer to input username and password
-            3. After system confirms it show a pop up with flight information
-            4. Customer confirms and goes back to home page
-        */
+        Log.d("ID", Integer.toString(v.getId()));
+
         if(v.getId() == R.id.checkButton){
             popUp();
-//            Intent i = new Intent(this, MainActivity.class);
-//            startActivity(i);
         }
 
-        for(int i = 0; i < 5; i++){
+        for(int i = 0; i < a.size(); i++){
             if(v.getId() == i){
-                Log.d("tag: \n", i + " ajksdnfamlenf\n\n\n\n\n");
+                Intent intent = new Intent(this, ConfirmSeatReservation.class);
+                Bundle bundle = new Bundle();
+
+                StringTokenizer st = new StringTokenizer(a.get(i), delim);
+
+                bundle.putString("Flight Number", st.nextToken());
+                bundle.putString("Flight Info", a.get(i));
+                bundle.putString("Tickets", numOfTickets);
+
+                intent.putExtras(bundle);
+                startActivity(intent);
+                Log.d("Why", a.get(i));
             }
         }
     }
@@ -69,18 +77,18 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
         EditText arrival = findViewById(R.id.arrivalEditText);
         EditText tickets = findViewById(R.id.numberOfTickets);
         String t = tickets.getText().toString();
+        numOfTickets = t;
 
-        Log.d("Tickets:\n", tickets.getText().toString());
-        Log.d("Departure:\n", departure.getText().toString());
-        Log.d("Arrival:\n", arrival.getText().toString());
-
-        ArrayList<String> a = flight.flightSearch(Integer.valueOf(t),
+        a = flight.flightSearch(Integer.valueOf(t),
                 departure.getText().toString(),
                 arrival.getText().toString() , db);
 
         for(int i = 0; i < a.size(); i++){
             Button b = new Button(this);
-            b.setText("Available Flight: " + "ajsdfhaus"/*a.get(i)*/);
+
+            StringTokenizer st = new StringTokenizer(a.get(i), delim);
+            String display = st.nextToken();
+            b.setText(display);
             b.setId(i);
             b.setOnClickListener(this);
             layout.addView(b);
