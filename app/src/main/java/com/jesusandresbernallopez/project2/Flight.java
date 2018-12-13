@@ -1,5 +1,7 @@
 package com.jesusandresbernallopez.project2;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 
 /**
@@ -22,15 +24,36 @@ public class Flight {
 
         String s = "SELECT * FROM flights WHERE flightCap > " + tickets + " AND departLoc = '" + dLoc + "' AND destinLoc = '" + aLoc + "';";
 
-//       try {
-//           if (db.lookup(s) == null) {
-//               throw new Exception("fuck this");
-//           }
-        //return db.lookup(s);
-//       }catch( Exception e){
-//           System.exit(69);
-//           return null;
-//        }
+        try {
+            if (db.lookup(s) == null) {
+                throw new Exception("fuck this");
+            }
+           
+            Cursor c = db.lookup(s);
+            ArrayList<String> list = new ArrayList<>();
+
+            StringBuilder sb = new StringBuilder();
+            int col = c.getColumnCount();
+            int row = c.getCount();
+
+            for (int i = 0; i < row; i++) {
+                c.moveToNext();
+                for (int j = 0; j < col; j++) {
+                    try {
+                        sb.append(c.getString(j) + ",");
+                    } catch (Exception e) {
+                        sb.append(Integer.toString(c.getInt(j)) + ",");
+                    }
+                }
+                list.add(sb.toString());
+                sb = new StringBuilder();
+            }
+            c.close();
+
+        } catch (Exception e) {
+            System.exit(69);
+            return null;
+        }
         return null;
     }
 

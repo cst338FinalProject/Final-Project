@@ -18,7 +18,9 @@ class Reservation {
     }
 
     public boolean newReservation(Database db, String uname, String pass, int numSeats, String flightName) {
+
         Account a = new Account();
+
         if (a.verifyCust(uname, pass, db)) {
 
             int cID = a.getCustomerID(uname, db);
@@ -35,12 +37,19 @@ class Reservation {
     }
 
     public boolean deleteReservation(Database db, String uname, String pass, int reservationNumber) {
+
         String s = "DELETE FROM reservations WHERE id = " + reservationNumber;
-        return true;
+
+        return db.delete(s);
     }
 
-    public Cursor searchReservations(Database db, String uname, String pass) {
-        String s = "SELECT * FROM reservations WHERE username = '" + uname + "';";
+    public Cursor getReservations(Database db, String uname, String pass) {
+
+        Account a = new Account();
+        int cid = a.getCustomerID(uname, db);
+        String s = "SELECT * FROM reservations WHERE customer_id = " + cid + ";";
+
         return db.lookup(s);
     }
+
 }
