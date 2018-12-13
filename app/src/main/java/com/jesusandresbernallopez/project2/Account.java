@@ -3,7 +3,12 @@ package com.jesusandresbernallopez.project2;
 import android.database.Cursor;
 import android.util.Log;
 
-import java.util.ArrayList;
+/**
+ * "CREATE TABLE customers (\n" +
+ * "id          integer primary key autoincrement,\n" +
+ * "password    varchar(16) not null,\n" +
+ * "username    varchar(16) not null unique);";
+ */
 
 public class Account {
 
@@ -23,13 +28,29 @@ public class Account {
 
     public boolean verifyCust(String uname, String pass, Database db) {
 
-        String s = "SELECT * FROM customers WHERE username = '" + uname + "';";
+        String s = "SELECT password FROM customers WHERE username = '" + uname + "';";
+        Cursor c = db.lookup(s);
+        c.moveToFirst();
+        if (c.getCount() == 0) {
+            //returns false since count of 0 means no entries with that customer username
+            return false;
+        }
+        String r = c.getString(1);
+        Log.d("Result", r);
 
-        ArrayList<String> r = db.lookup(s);
-        Log.d("Result", r.get(0));
+        return r.equals(pass);
 
-        return r.contains(pass);
+    }
 
+    public int getCustomerID(String uname, Database db) {
+        String s = "SELECT c_id FROM customers WHERE username = '" + uname + "';";
+        Cursor c = db.lookup(s);
+        if (c.getCount() == 0) {
+            return -1;
+        } else {
+            c.moveToFirst();
+            return c.getInt(0);
+        }
     }
 
     public boolean adminVerify(String uname, String pass) {
