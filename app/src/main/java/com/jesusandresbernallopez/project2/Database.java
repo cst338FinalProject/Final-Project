@@ -25,6 +25,7 @@ public class Database extends SQLiteOpenHelper {
                 db.close();
                 return false;
             }
+            Log.d("SomethingThatIsObvious", "Here");
 
             db.execSQL(s);
             db.close();
@@ -33,7 +34,7 @@ public class Database extends SQLiteOpenHelper {
 
         } catch (Exception e) {
 
-            Log.d("Exception", e.getLocalizedMessage());
+            Log.d("SomethingThatIsObvious", e.getLocalizedMessage());
             db.close();
 
             return false;
@@ -111,9 +112,8 @@ public class Database extends SQLiteOpenHelper {
 
         String s = "CREATE TABLE log (" +
                 "timestamp    datetime not null,\n" +
-                "user         varchar(36) not null,\n" +
-                "entry_id     integer primary key autoincrement,\n" +
-                "description  varchar(40));";
+                "event        varchar(48) not null,\n" +
+                "entry_id     integer primary key autoincrement);";
 
         db.execSQL(s);
 

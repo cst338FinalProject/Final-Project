@@ -1,6 +1,7 @@
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -49,12 +50,14 @@ public class Flight {
                 sb = new StringBuilder();
             }
             c.close();
+            db.close();
+            return list;
 
         } catch (Exception e) {
+            Log.d("Exp", e.getLocalizedMessage());
             System.exit(69);
             return null;
         }
-        return null;
     }
 
     public boolean reserveSeat(int i) {
@@ -66,7 +69,7 @@ public class Flight {
 
     }
 
-    public boolean addFlight(String name, String dep, String arriv, int time, int cap, int price, Database db){
+    public boolean addFlight(String name, String dep, String arriv, int time, int cap, Float price, Database db){
 
         String s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
                 " VALUES ('"+ name + "', '" + dep +"', '"+ arriv +"', " + time + ", " + cap + ", " + price + ", 0);";

@@ -43,14 +43,14 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
             String flightCap = fc.getText().toString();
 
             EditText p = findViewById(R.id.priceEditText);
-            String price = p.getText().toString();
+            Float price = Float.valueOf(p.getText().toString());
 
 
             Flight flight = new Flight();
             Database db = new Database(getBaseContext());
 
             final boolean flightAdded = flight.addFlight(flightNumber, departure, arrival, Integer.valueOf(departureTime),
-                    Integer.valueOf(flightCap), Integer.valueOf(price), db);
+                    Integer.valueOf(flightCap), price, db);
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

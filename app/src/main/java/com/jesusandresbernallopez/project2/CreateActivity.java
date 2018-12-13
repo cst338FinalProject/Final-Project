@@ -46,10 +46,10 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
             Database db = new Database(getBaseContext());
 
-            Account account = new Account(db);
+            Account account = new Account();
             if(!account.createAccount(username, password, db)){
                 builder.setTitle("Fail");
-                builder.setMessage("Account already exists.");
+                builder.setMessage("Unable to create account.");
             }else{
                 builder.setTitle("Success");
                 builder.setMessage("Your account was created.");
