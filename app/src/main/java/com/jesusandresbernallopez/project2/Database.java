@@ -18,7 +18,6 @@ public class Database extends SQLiteOpenHelper {
     public boolean insert(String s) {
 
         db = getWritableDatabase();
-        Log.d("Not a good name", "ok");
 
         try {
             if (s.contains("\"; ")) {
@@ -42,6 +41,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public Cursor logLookUp(String s) {
+
         db = getReadableDatabase();
 
         return db.rawQuery(s, null);
@@ -234,6 +234,5 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        //Not implemented on purpose, the DB will never be upgraded in this project.
     }
 }

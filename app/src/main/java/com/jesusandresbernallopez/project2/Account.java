@@ -1,7 +1,6 @@
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
-import android.util.Log;
 
 /**
  * "CREATE TABLE customers (\n" +
@@ -12,52 +11,53 @@ import android.util.Log;
 
 public class Account {
 
-    public Account(){
-
-    }
-
-    public Account(Database d) {
+    public Account() {
     }
 
     public boolean createAccount(String uname, String pass, Database db) {
+
         String s = "INSERT INTO customers (password, username) VALUES('" + pass + "', '" + uname +"');";
 
         return db.insert(s);
-
     }
 
     public boolean verifyCust(String uname, String pass, Database db) {
 
         String s = "SELECT password FROM customers WHERE username = '" + uname + "';";
         Cursor c = db.lookup(s);
+
         c.moveToFirst();
+
         if (c.getCount() == 0) {
-            //returns false since count of 0 means no entries with that customer username
             return false;
         }
+
         String r = c.getString(1);
-        Log.d("Result", r);
+        c.close();
 
         return r.equals(pass);
-
     }
 
     public int getCustomerID(String uname, Database db) {
         String s = "SELECT c_id FROM customers WHERE username = '" + uname + "';";
         Cursor c = db.lookup(s);
+
         if (c.getCount() == 0) {
             return -1;
         } else {
             c.moveToFirst();
-            return c.getInt(0);
+            int temp = c.getInt(0);
+            c.close();
+            return temp;
         }
     }
 
     public boolean adminVerify(String uname, String pass) {
-        return uname.equals("!admiN2") && pass.equals("!admiN2");
+        return uname.equals("!admiM2") && pass.equals("!admiM2");
     }
 
     public Cursor dispLog(Database db) {
+
         String s = "SELECT * FROM log order by timestamp desc;";
 
         return db.logLookUp(s);
