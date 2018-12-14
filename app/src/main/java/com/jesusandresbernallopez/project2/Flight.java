@@ -23,10 +23,11 @@ public class Flight {
 
     public ArrayList<String> flightSearch(int tickets, String dLoc, String aLoc, Database db) {
 
-        String s = "SELECT * FROM flights WHERE flightCap > " + tickets + " AND departLoc = '" + dLoc + "' AND destinLoc = '" + aLoc + "';";
-
+        String s = "SELECT * FROM flights WHERE (flightCap - claimedSeats - " + tickets + ") > 0 AND departLoc = '" + dLoc + "' AND destinLoc = '" + aLoc + "';";
+        Log.d("size", "starting query search" + s);
         try {
             if (db.lookup(s) == null) {
+                Log.d("size", "null lookup");
                 throw new Exception("fuck this");
             }
            
@@ -34,9 +35,16 @@ public class Flight {
             ArrayList<String> list = new ArrayList<>();
 
             StringBuilder sb = new StringBuilder();
+            Log.d("size", "Starting cursor");
             int col = c.getColumnCount();
-            int row = c.getCount();
+            int row = 0;
+            try{
+                row = c.getCount();
+            }catch(Exception e){
+                Log.d("blah", "Message: " + e.getLocalizedMessage());
+            }
 
+            Log.d("size", "cursor values put into variables");
             for (int i = 0; i < row; i++) {
                 c.moveToNext();
                 for (int j = 0; j < col; j++) {
@@ -49,8 +57,10 @@ public class Flight {
                 list.add(sb.toString());
                 sb = new StringBuilder();
             }
+
             c.close();
             db.close();
+            Log.d("size", "about to return list");
             return list;
 
         } catch (Exception e) {
@@ -69,11 +79,16 @@ public class Flight {
 
     }
 
-    public boolean addFlight(String name, String dep, String arriv, int time, int cap, Float price, Database db){
+    public boolean addFlight(String name, String dep, String arriv, int hour, int min, int cap, Float price, Database db){
 
-        String s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('"+ name + "', '" + dep +"', '"+ arriv +"', " + time + ", " + cap + ", " + price + ", 0);";
-
-        return db.insert(s);
+        String s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('"+ name + "', '" + dep +"', '"+ arriv + "', " + hour + ", " + min + ", " + cap + ", " + price + ", 0);";
+        try {
+            Log.d("PENIS", s);
+            return db.insert(s);
+        }catch(Exception e){
+            Log.d("PENIS", e.getLocalizedMessage());
+            return false;
+        }
     }
 }

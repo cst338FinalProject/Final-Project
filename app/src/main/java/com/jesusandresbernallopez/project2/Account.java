@@ -71,14 +71,14 @@ public class Account {
             return false;
         }
 
-        String r = c.getString(1);
+        String r = c.getString(0);
         c.close();
 
         return r.equals(pass);
     }
 
     public int getCustomerID(String uname, Database db) {
-        String s = "SELECT c_id FROM customers WHERE username = '" + uname + "';";
+        String s = "SELECT id FROM customers WHERE username = '" + uname + "';";
         Cursor c = db.lookup(s);
 
         if (c.getCount() == 0) {

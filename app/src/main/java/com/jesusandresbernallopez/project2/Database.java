@@ -25,7 +25,7 @@ public class Database extends SQLiteOpenHelper {
                 db.close();
                 return false;
             }
-            Log.d("SomethingThatIsObvious", "Here");
+            Log.d("PENIS", "Here");
 
             db.execSQL(s);
             db.close();
@@ -34,7 +34,7 @@ public class Database extends SQLiteOpenHelper {
 
         } catch (Exception e) {
 
-            Log.d("SomethingThatIsObvious", e.getLocalizedMessage());
+            Log.d("PENIS", "insert: " + e.getLocalizedMessage());
             db.close();
 
             return false;
@@ -58,7 +58,7 @@ public class Database extends SQLiteOpenHelper {
             return null;
         }
         Cursor c = db.rawQuery(s, null);
-        db.close();
+//        db.close();
         return c;
     }
 
@@ -85,6 +85,7 @@ public class Database extends SQLiteOpenHelper {
     }
 
     public boolean update(String s) {
+        db = getWritableDatabase();
         if (s.contains("\"; ")) {
 
             Log.d("SQL Injection", "User attempted custom SQL");
@@ -107,7 +108,7 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        
+
         /**Log Table Schema**/
 
         String s = "CREATE TABLE log (" +
@@ -148,7 +149,8 @@ public class Database extends SQLiteOpenHelper {
                 "name         varchar(20) not null unique,\n" +
                 "departLoc    varchar(20) not null,\n" +
                 "destinLoc    varchar(20) not null,\n" +
-                "departTime   integer,\n" +
+                "departHour   integer check (departHour<24) check(departHour>=0),\n" +
+                "departMin    integer check (departMin <60) check(departMin >=0),\n" +
                 "flightCap    integer not null,\n" +
                 "price        decimal not null,\n" +
                 "claimedSeats integer not null,\n" +
@@ -157,28 +159,28 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL(s); // crashed with no flights prior to adding this
 
         /**Project spec wants default generated flights**/
-        s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('Otter101', 'Monterey', 'Los Angeles', 1030, 10, 150.00, 0);";
+        s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('Otter101', 'Monterey', 'Los Angeles', 10, 30, 10, 150.00, 0);";
 
         db.execSQL(s);
 
-        s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('Otter102', 'Los Angeles', 'Monterey', 1300, 10, 150.00, 0);";
+        s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('Otter102', 'Los Angeles', 'Monterey', 13, 00, 10, 150.00, 0);";
 
         db.execSQL(s);
 
-        s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('Otter201', 'Monterey', 'Seattle', 1100, 5, 200.50, 0);";
+        s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('Otter201', 'Monterey', 'Seattle', 11, 00, 5, 200.50, 0);";
 
         db.execSQL(s);
 
-        s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('Otter205', 'Monterey', 'Seattle', 1545, 15, 150.00, 0);";
+        s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('Otter205', 'Monterey', 'Seattle', 15, 45, 15, 150.00, 0);";
 
         db.execSQL(s);
 
-        s = "INSERT INTO flights (name, departLoc, destinLoc, departTime, flightCap, price, claimedSeats)" +
-                " VALUES ('Otter202', 'Seattle', 'Monterey', 1410, 5, 200.00, 0);";
+        s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
+                " VALUES ('Otter202', 'Seattle', 'Monterey', 14, 10, 5, 200.00, 0);";
 
         db.execSQL(s);
 
@@ -187,9 +189,9 @@ public class Database extends SQLiteOpenHelper {
                 "id          integer primary key autoincrement,\n" +
                 "seatsReq    integer not null," +
                 "flight_name varchar(20),\n" +
-                "customer_id integer,\n" +
-                "foreign key (flight_name) references flights (name) on delete cascade,\n" +
-                "foreign key (customer_id) references customers (id) on delete cascade);";
+                "customer_id integer);"; //+
+//                "foreign key (flight_name) references flights (name) on delete cascade,\n" +
+//                "foreign key (customer_id) references customers (id) on delete cascade);";
 
         db.execSQL(s);
 

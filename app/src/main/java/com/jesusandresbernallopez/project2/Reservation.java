@@ -1,6 +1,7 @@
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
+import android.util.Log;
 
 /**
  * "CREATE TABLE reservations(\n" +
@@ -25,11 +26,17 @@ class Reservation {
 
             int cID = a.getCustomerID(uname, db);
             String s = "INSERT INTO reservations (seatsReq, flight_name, customer_id) VALUES (" +
-                    Integer.toString(numSeats) + ", ''" + flightName + "', " + Integer.toString(cID) + ");";
+                    Integer.toString(numSeats) + ", '" + flightName + "', " + Integer.toString(cID) + ");";
 
-            db.insert(s);
+            boolean insert = db.insert(s);
+            try{
+                String st = "UPDATE flights SET claimedSeats = (select claimedSeats from flights where name = '" + flightName + "'; + " + Integer.toString(numSeats) + ") WHERE name = '" + flightName + "';";
+                db.update(st);
+            }catch (Exception e){
+                Log.d("blah", e.getLocalizedMessage());
+            }
 
-            return true;
+            return db.insert(s);
 
         } else {
             return false;
@@ -43,11 +50,20 @@ class Reservation {
         return db.delete(s);
     }
 
-    public Cursor getReservations(Database db, String uname, String pass) {
+    public int getLastReservation(Database db, String uname, String pass){
+        String s = "SELECT id FROM reservations order by id desc limit 1;";
 
+        Cursor c = db.lookup(s);
+        c.moveToFirst();
+        int i = c.getInt(0);
+        c.close();
+        return i;
+    }
+
+    public Cursor getReservations(Database db, String uname, String pass) {
         Account a = new Account();
         int cid = a.getCustomerID(uname, db);
-        String s = "SELECT * FROM reservations WHERE customer_id = " + cid + ";";
+        String s = "SELECT id, flight_name FROM reservations WHERE customer_id = " + cid + ";";
 
         return db.lookup(s);
     }
