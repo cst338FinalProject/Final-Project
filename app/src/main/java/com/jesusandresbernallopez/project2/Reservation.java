@@ -1,3 +1,14 @@
+/*
+ *  Title: Reservation.java
+
+ *  Abstract: Handles everything that involves a reservation.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;

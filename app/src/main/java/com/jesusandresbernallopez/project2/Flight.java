@@ -1,3 +1,14 @@
+/*
+ *  Title: Flight.java
+
+ *  Abstract: Flight.java is responsible for searching flights, reserving a seat, and adding a flight.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
@@ -24,27 +35,18 @@ public class Flight {
     public ArrayList<String> flightSearch(int tickets, String dLoc, String aLoc, Database db) {
 
         String s = "SELECT * FROM flights WHERE (flightCap - claimedSeats - " + tickets + ") > 0 AND departLoc = '" + dLoc + "' AND destinLoc = '" + aLoc + "';";
-        Log.d("size", "starting query search" + s);
         try {
             if (db.lookup(s) == null) {
-                Log.d("size", "null lookup");
-                throw new Exception("fuck this");
+                throw new Exception("Found no flights");
             }
            
             Cursor c = db.lookup(s);
             ArrayList<String> list = new ArrayList<>();
 
             StringBuilder sb = new StringBuilder();
-            Log.d("size", "Starting cursor");
             int col = c.getColumnCount();
-            int row = 0;
-            try{
-                row = c.getCount();
-            }catch(Exception e){
-                Log.d("blah", "Message: " + e.getLocalizedMessage());
-            }
+            int row = c.getCount();
 
-            Log.d("size", "cursor values put into variables");
             for (int i = 0; i < row; i++) {
                 c.moveToNext();
                 for (int j = 0; j < col; j++) {
@@ -60,12 +62,10 @@ public class Flight {
 
             c.close();
             db.close();
-            Log.d("size", "about to return list");
             return list;
 
         } catch (Exception e) {
-            Log.d("Exp", e.getLocalizedMessage());
-            System.exit(69);
+            System.exit(2);
             return null;
         }
     }
@@ -84,10 +84,8 @@ public class Flight {
         String s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
                 " VALUES ('"+ name + "', '" + dep +"', '"+ arriv + "', " + hour + ", " + min + ", " + cap + ", " + price + ", 0);";
         try {
-            Log.d("PENIS", s);
             return db.insert(s);
         }catch(Exception e){
-            Log.d("PENIS", e.getLocalizedMessage());
             return false;
         }
     }

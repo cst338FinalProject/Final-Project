@@ -1,9 +1,17 @@
+/*
+ *  Title: Account.java
+
+ *  Abstract: Handles activities related to the customer's account
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+*/
+
 package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
-import android.util.Log;
-
-import java.util.regex.Pattern;
 
 /**
  * "CREATE TABLE customers (\n" +
@@ -55,7 +63,6 @@ public class Account {
             return false;
         }
         String s = "INSERT INTO customers (password, username) VALUES('" + pass + "', '" + uname +"');";
-        Log.d("SomethingThatIsObvious", "Account");
 
         return db.insert(s);
     }

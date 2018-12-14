@@ -1,18 +1,25 @@
+/*
+ *  Title: ConfirmSeatReservation.java
+
+ *  Abstract: The customer enters username and password to confirm the cancellation of the reservation
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.util.StringTokenizer;
 
 public class ConfirmSeatReservation extends AppCompatActivity implements View.OnClickListener {
@@ -34,8 +41,6 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.checkButton){
-            //TODO: Check that the information is correct
-
             Reservation reservation = new Reservation();
             Database db = new Database(this);
 
@@ -45,9 +50,6 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             EditText pass = findViewById(R.id.passwordEditText);
             String password = pass.getText().toString();
 
-//            Account account = new Account();
-//            boolean verified = account.verifyCust(username, password, db);
-
             String flightInfo = getIntent().getExtras().getString("Flight Info");
             String delim = ",";
             StringTokenizer st = new StringTokenizer(flightInfo, delim);
@@ -56,11 +58,11 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             String arrival = st.nextToken();
             String departTime = st.nextToken();
             st.nextToken();
-            String total = st.nextToken();
+            st.nextToken();
             String price = st.nextToken();
             String numOfTickets = getIntent().getExtras().getString("Tickets");
             int claimed = Integer.valueOf(st.nextToken());
-            int totalPrice = Integer.valueOf(price) * Integer.valueOf(numOfTickets);
+            double totalPrice = Double.valueOf(price) * Integer.valueOf(numOfTickets);
 
             boolean reserveSucccesful = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
 
@@ -85,9 +87,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                     "Arrival: " + arrival + "\n"+
                     "Number Of Tickets: " + numOfTickets + "\n"+
                     "Reservation Number: " + Integer.toString(reservationNum) + "\n"+
-                    "Total amount: " + Integer.toString(totalPrice) + "\n" +
-                    "Total: " + total + "\n" +
-                    "Claimed: " + claimed;
+                    "Total amount: " + Double.toString(totalPrice);
 
 
             if (reserveSucccesful){

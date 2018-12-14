@@ -1,27 +1,28 @@
+/*
+ *  Title: ReserveSeat.java
+
+ *  Abstract: Allows customer to search for flights and choose the flight they would like to reserve.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Layout;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TextView;
 import java.util.StringTokenizer;
-
 import java.util.ArrayList;
 
 public class ReserveSeat extends AppCompatActivity implements View.OnClickListener{
@@ -42,8 +43,6 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v){
-        Log.d("ID", Integer.toString(v.getId()));
-
         if(v.getId() == R.id.checkButton){
             popUp();
         }
@@ -58,7 +57,6 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
                 bundle.putString("Flight Number", st.nextToken());
                 bundle.putString("Flight Info", a.get(i));
                 bundle.putString("Tickets", numOfTickets);
-                Log.d("Why", a.get(i));
 
                 intent.putExtras(bundle);
                 startActivity(intent);

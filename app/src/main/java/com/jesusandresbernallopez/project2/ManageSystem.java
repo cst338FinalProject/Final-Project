@@ -1,14 +1,22 @@
+/*
+ *  Title: ManageSystem.java
+
+ *  Abstract: Prompts user for admin username and password if denied sends to homescreen and if
+ *            approves send admin to the next screen.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +35,6 @@ public class ManageSystem extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v){
         if(v.getId() == R.id.checkButton){
-            Log.d("Checking", "Checl \n\n\n\n\n\n\n\n\nButton");
             EditText username = findViewById(R.id.usernameEditText);
             EditText password = findViewById(R.id.passwordEditText);
             String user = username.getText().toString();

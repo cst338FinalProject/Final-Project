@@ -1,14 +1,21 @@
+/*
+ *  Title: NewFlight.java
+
+ *  Abstract: Allows admin to add a new flight to the database.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +32,7 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v){ //TODO: Add an addFlight function
+    public void onClick(View v){
         if(v.getId() == R.id.addFlightButton){
             EditText fn = findViewById(R.id.flightNumber);
             String flightNumber = fn.getText().toString();
@@ -51,9 +58,6 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
                 temp = Character.toString(departureTime.charAt(2)) + Character.toString(departureTime.charAt(3));
                 min = Integer.valueOf(temp);
             }
-
-            Log.d("time", Integer.toString(hour));
-            Log.d("time", Integer.toString(min));
 
             EditText fc = findViewById(R.id.flightCapacityEditText);
             String flightCap = fc.getText().toString();

@@ -1,20 +1,24 @@
+/*
+ *  Title: SystemLogs.java
+
+ *  Abstract: Displays activity to the admin.
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import java.util.StringTokenizer;
 
 public class SystemLogs extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,7 +53,6 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
         Database db = new Database(getBaseContext());
         String s = "SELECT * FROM log";
         Cursor c = db.lookup(s);
-        Log.d("size", "shouldn't crash here");
         Button b = new Button(this);
         b.setText("Hi");
         b.setOnClickListener(this);
@@ -67,9 +70,6 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
                 }
             }
         }
-
-        Log.d("blah", Integer.toString(c.getColumnCount()));
-        Log.d("blah", Integer.toString(c.getCount()));
 
         layout.setOnClickListener(this);
 

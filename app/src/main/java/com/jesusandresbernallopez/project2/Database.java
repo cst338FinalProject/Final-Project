@@ -1,3 +1,14 @@
+/*
+ *  Title: Database.java
+
+ *  Abstract: Handles all interactions with the SQLiteDatabase
+
+ *  Authors: Jesus A. Bernal Lopez
+ *           Mike Menendez
+
+ *  Date: 12-14-2018
+ */
+
 package com.jesusandresbernallopez.project2;
 
 import android.content.Context;
@@ -5,7 +16,6 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -21,11 +31,9 @@ public class Database extends SQLiteOpenHelper {
 
         try {
             if (s.contains("\"; ")) {
-                Log.d("SQL Injection", "User attempted custom SQL");
                 db.close();
                 return false;
             }
-            Log.d("PENIS", "Here");
 
             db.execSQL(s);
             db.close();
@@ -34,9 +42,7 @@ public class Database extends SQLiteOpenHelper {
 
         } catch (Exception e) {
 
-            Log.d("PENIS", "insert: " + e.getLocalizedMessage());
             db.close();
-
             return false;
         }
     }
@@ -44,7 +50,6 @@ public class Database extends SQLiteOpenHelper {
     public Cursor logLookUp(String s) {
 
         db = getReadableDatabase();
-
         return db.rawQuery(s, null);
     }
 
@@ -53,12 +58,10 @@ public class Database extends SQLiteOpenHelper {
         db = getReadableDatabase();
 
         if (s.contains("\"; ")) {
-            Log.d("SQL Injection", "User attempted custom SQL");
             db.close();
             return null;
         }
         Cursor c = db.rawQuery(s, null);
-//        db.close();
         return c;
     }
 
@@ -67,7 +70,6 @@ public class Database extends SQLiteOpenHelper {
         db = getWritableDatabase();
 
         if (s.contains("\"; ") || s.contains("'; ")) {
-            Log.d("SQL Injection", "User attempted custom SQL");
             db.close();
             return false;
         }
@@ -75,7 +77,6 @@ public class Database extends SQLiteOpenHelper {
 
             db.execSQL(s);
             db.close();
-
             return true;
 
         } catch (Exception e) {
@@ -88,9 +89,7 @@ public class Database extends SQLiteOpenHelper {
         db = getWritableDatabase();
         if (s.contains("\"; ")) {
 
-            Log.d("SQL Injection", "User attempted custom SQL");
             db.close();
-
             return false;
         }
         try {
