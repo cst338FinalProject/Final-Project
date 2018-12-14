@@ -45,6 +45,9 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             EditText pass = findViewById(R.id.passwordEditText);
             String password = pass.getText().toString();
 
+//            Account account = new Account();
+//            boolean verified = account.verifyCust(username, password, db);
+
             String flightInfo = getIntent().getExtras().getString("Flight Info");
             String delim = ",";
             StringTokenizer st = new StringTokenizer(flightInfo, delim);
@@ -53,9 +56,11 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             String arrival = st.nextToken();
             String departTime = st.nextToken();
             st.nextToken();
-            st.nextToken();
+            String total = st.nextToken();
             String price = st.nextToken();
             String numOfTickets = getIntent().getExtras().getString("Tickets");
+            int claimed = Integer.valueOf(st.nextToken());
+            int totalPrice = Integer.valueOf(price) * Integer.valueOf(numOfTickets);
 
             boolean reserveSucccesful = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
 
@@ -69,17 +74,26 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                 }
             });
 
+            int reservationNum = -1;
+            if(reserveSucccesful){
+                reservationNum = reservation.getLastReservation(db, username, password);
+            }
+
             String message = "Username: " + username +"\n"+
                     "Flight Number: " + flightNum + "\n"+
                     "Departure: " + departure + ", " + departTime + "\n"+
                     "Arrival: " + arrival + "\n"+
                     "Number Of Tickets: " + numOfTickets + "\n"+
-                    "Reservation Number: " + "\n"+
-                    "Total amount: " + price;
+                    "Reservation Number: " + Integer.toString(reservationNum) + "\n"+
+                    "Total amount: " + Integer.toString(totalPrice) + "\n" +
+                    "Total: " + total + "\n" +
+                    "Claimed: " + claimed;
 
 
             if (reserveSucccesful){
                 builder.setMessage(message);
+                String str = "UPDATE flights set claimedSeats = " + claimed + Integer.valueOf(numOfTickets) + " where name = '" + flightNum + "';";
+                db.update(str);
             }else{
                 builder.setMessage("You tried but failed");
             }

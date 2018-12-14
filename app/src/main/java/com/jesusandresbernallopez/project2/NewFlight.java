@@ -38,6 +38,22 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
 
             EditText dt = findViewById(R.id.departureTimeEditText);
             String departureTime = dt.getText().toString();
+            int hour = -1;
+            int min = -1;
+            if(departureTime.length() == 3){
+                hour = Integer.valueOf(departureTime.charAt(0));
+                String temp = Character.toString(departureTime.charAt(1)) + Character.toString(departureTime.charAt(2));
+                min = Integer.valueOf(temp);
+            }else{
+                String temp = Character.toString(departureTime.charAt(0)) + Character.toString(departureTime.charAt(1));
+                hour = Integer.valueOf(temp);
+
+                temp = Character.toString(departureTime.charAt(2)) + Character.toString(departureTime.charAt(3));
+                min = Integer.valueOf(temp);
+            }
+
+            Log.d("time", Integer.toString(hour));
+            Log.d("time", Integer.toString(min));
 
             EditText fc = findViewById(R.id.flightCapacityEditText);
             String flightCap = fc.getText().toString();
@@ -49,7 +65,7 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
             Flight flight = new Flight();
             Database db = new Database(getBaseContext());
 
-            final boolean flightAdded = flight.addFlight(flightNumber, departure, arrival, Integer.valueOf(departureTime),
+            final boolean flightAdded = flight.addFlight(flightNumber, departure, arrival, hour, min,
                     Integer.valueOf(flightCap), price, db);
 
 

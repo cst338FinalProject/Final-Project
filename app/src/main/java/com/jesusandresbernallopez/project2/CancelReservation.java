@@ -2,6 +2,7 @@ package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class CancelReservation extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,24 +56,41 @@ public class CancelReservation extends AppCompatActivity implements View.OnClick
             String password = pass.getText().toString();
 
             Database db = new Database(getBaseContext());
-
-            Account account = new Account();
-            boolean b = account.verifyCust(username,password, db);
-
-            Log.d("Result", Boolean.toString(b));
-
             Reservation reservation = new Reservation();
+            Cursor c = reservation.getReservations(db, username, password);
 
-            if(b){
-                builder.setTitle("69");
-                builder.setMessage("Nice");
-            }else{
-                builder.setTitle("Fail");
-                builder.setMessage("Sorry, no reservation with the entered credentials.");
+            int column = c.getColumnCount();
+            int row = c.getCount();
+            StringBuilder sb = new StringBuilder();
+            ArrayList<String> list = new ArrayList<>();
+
+            for(int i = 0; i < row; i++){
+                c.moveToNext();
+                for(int j = 0; j < column; j++){
+                    try{
+                       sb.append(c.getString(j) + ",");
+                    }catch (Exception e){
+                        sb.append(Integer.toString(c.getInt(j)) + ",");
+                    }
+                }
+                list.add(sb.toString());
+                sb = new StringBuilder();
             }
 
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            if(list.size() == 0){
+                builder.setTitle("Fail");
+                builder.setMessage("Sorry, no reservation with the entered credentials.");
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }else{
+                Intent i = new Intent(this, CancelFlight.class);
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("list", list);
+                bundle.putString("username", username);
+                bundle.putString("password", password);
+                i.putExtras(bundle);
+                startActivity(i);
+            }
 
         }
     }

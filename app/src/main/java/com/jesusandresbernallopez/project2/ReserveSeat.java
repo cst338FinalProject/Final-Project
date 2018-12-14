@@ -1,9 +1,11 @@
 package com.jesusandresbernallopez.project2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Layout;
@@ -56,10 +58,10 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
                 bundle.putString("Flight Number", st.nextToken());
                 bundle.putString("Flight Info", a.get(i));
                 bundle.putString("Tickets", numOfTickets);
+                Log.d("Why", a.get(i));
 
                 intent.putExtras(bundle);
                 startActivity(intent);
-                Log.d("Why", a.get(i));
             }
         }
     }
@@ -83,20 +85,47 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
                 departure.getText().toString(),
                 arrival.getText().toString() , db);
 
+
+        int total = 0;
         for(int i = 0; i < a.size(); i++){
             Button b = new Button(this);
 
             StringTokenizer st = new StringTokenizer(a.get(i), delim);
             String display = st.nextToken();
-            b.setText(display);
-            b.setId(i);
-            b.setOnClickListener(this);
-            layout.addView(b);
+            st.nextToken();
+            st.nextToken();
+            st.nextToken();
+            st.nextToken();
+            int cap = Integer.valueOf(st.nextToken());
+            st.nextToken();
+            int claimed = Integer.valueOf(st.nextToken());
+            if((cap - claimed - Integer.valueOf(numOfTickets)) > 0){
+                b.setText(display);
+                b.setId(i);
+                b.setOnClickListener(this);
+                layout.addView(b);
+                total++;
+            }
+        }
+        if(total == 0){
+            final Intent intent = new Intent(this, MainActivity.class);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    startActivity(intent);
+                }
+            });
+
+            builder.setTitle("Sorry");
+            builder.setMessage("No flights available");
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
 
         layout.setOnClickListener(this);
 
         setContentView(layout);
-        Log.d("Pop", "at least it got here");
     }
 }
