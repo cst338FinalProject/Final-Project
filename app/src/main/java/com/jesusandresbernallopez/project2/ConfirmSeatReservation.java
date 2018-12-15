@@ -20,6 +20,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.StringTokenizer;
 
 public class ConfirmSeatReservation extends AppCompatActivity implements View.OnClickListener {
@@ -62,14 +65,22 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             String price = st.nextToken();
             String numOfTickets = getIntent().getExtras().getString("Tickets");
             int claimed = Integer.valueOf(st.nextToken());
-            double totalPrice = Double.valueOf(price) * Integer.valueOf(numOfTickets);
+            float totalPrice = Float.valueOf(price) * Integer.valueOf(numOfTickets);
+
+            NumberFormat formatter = new DecimalFormat("0.00");
             StringBuilder sb = new StringBuilder();
             if(departHour.length() == 1){
                 sb.append("0" + departHour + ":");
             }else{
                 sb.append(departHour + ":");
             }
-            sb.append(departMin);
+            if(departMin.length() == 1){
+                sb.append(departMin + "0");
+            }else{
+                sb.append(departMin);
+            }
+
+
 
             String departTime = sb.toString();
 
@@ -96,7 +107,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                     "Arrival: " + arrival + "\n"+
                     "Number Of Tickets: " + numOfTickets + "\n"+
                     "Reservation Number: " + Integer.toString(reservationNum) + "\n"+
-                    "Total amount: " + Double.toString(totalPrice);
+                    "Total amount: $" + formatter.format(totalPrice);
 
 
             if (reserveSucccesful){
