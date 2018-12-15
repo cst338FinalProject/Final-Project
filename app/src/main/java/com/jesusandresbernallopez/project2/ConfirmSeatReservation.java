@@ -56,13 +56,22 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             String flightNum = st.nextToken();
             String departure = st.nextToken();
             String arrival = st.nextToken();
-            String departTime = st.nextToken();
-            st.nextToken();
+            String departHour = st.nextToken();
+            String departMin = st.nextToken();
             st.nextToken();
             String price = st.nextToken();
             String numOfTickets = getIntent().getExtras().getString("Tickets");
             int claimed = Integer.valueOf(st.nextToken());
             double totalPrice = Double.valueOf(price) * Integer.valueOf(numOfTickets);
+            StringBuilder sb = new StringBuilder();
+            if(departHour.length() == 1){
+                sb.append("0" + departHour + ":");
+            }else{
+                sb.append(departHour + ":");
+            }
+            sb.append(departMin);
+
+            String departTime = sb.toString();
 
             boolean reserveSucccesful = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
 
