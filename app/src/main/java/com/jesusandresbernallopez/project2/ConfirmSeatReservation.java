@@ -72,7 +72,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
             if(departHour.length() == 1){
                 sb.append("0" + departHour + ":");
             }else{
-                sb.append(departHour + ":");
+                sb.append(departHour + ".");
             }
             if(departMin.length() == 1){
                 sb.append(departMin + "0");
@@ -80,9 +80,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                 sb.append(departMin);
             }
 
-
-
-            String departTime = sb.toString();
+            float departTime = Float.valueOf(sb.toString());
 
             boolean reserveSucccesful = reservation.newReservation(db, username, password, Integer.valueOf(numOfTickets), flightNum);
 
@@ -103,7 +101,7 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
 
             String message = "Username: " + username +"\n"+
                     "Flight Number: " + flightNum + "\n"+
-                    "Departure: " + departure + ", " + departTime + "\n"+
+                    "Departure: " + departure + ", " + formatter.format(departTime) + "\n"+
                     "Arrival: " + arrival + "\n"+
                     "Number Of Tickets: " + numOfTickets + "\n"+
                     "Reservation Number: " + Integer.toString(reservationNum) + "\n"+
