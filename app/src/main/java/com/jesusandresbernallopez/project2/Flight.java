@@ -70,15 +70,6 @@ public class Flight {
         }
     }
 
-    public boolean reserveSeat(int i) {
-        try {
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-
-    }
-
     public boolean addFlight(String name, String dep, String arriv, int hour, int min, int cap, Float price, Database db){
 
         String s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
