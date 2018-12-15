@@ -20,7 +20,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.StringTokenizer;
@@ -107,7 +106,6 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                     "Reservation Number: " + Integer.toString(reservationNum) + "\n"+
                     "Total amount: $" + formatter.format(totalPrice);
 
-
             if (reserveSucccesful){
                 builder.setMessage(message);
                 String str = "UPDATE flights set claimedSeats = " + claimed + Integer.valueOf(numOfTickets) + " where name = '" + flightNum + "';";
@@ -116,10 +114,8 @@ public class ConfirmSeatReservation extends AppCompatActivity implements View.On
                 builder.setMessage("You tried but failed");
             }
 
-
             AlertDialog dialog = builder.create();
             dialog.show();
         }
     }
-
 }

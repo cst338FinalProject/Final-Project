@@ -13,13 +13,6 @@ package com.jesusandresbernallopez.project2;
 
 import android.database.Cursor;
 
-/**
- * "CREATE TABLE customers (\n" +
- * "id          integer primary key autoincrement,\n" +
- * "password    varchar(16) not null,\n" +
- * "username    varchar(16) not null unique);";
- */
-
 public class Account {
 
     public Account() {

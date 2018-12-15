@@ -33,7 +33,6 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
 
         Button checkButton = findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
-
     }
 
     @Override
@@ -54,8 +53,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
             });
 
             Database db = new Database(getBaseContext());
-
             Account account = new Account();
+
             if(!account.createAccount(username, password, db)){
                 builder.setTitle("Fail");
                 builder.setMessage("Unable to create account.");
@@ -64,12 +63,8 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                 builder.setMessage("Your account was created.");
             }
 
-
             AlertDialog dialog = builder.create();
             dialog.show();
         }
     }
-
-
-
 }

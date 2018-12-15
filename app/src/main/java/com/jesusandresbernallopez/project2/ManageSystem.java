@@ -60,9 +60,6 @@ public class ManageSystem extends AppCompatActivity implements View.OnClickListe
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
-
-
         }
     }
-
 }

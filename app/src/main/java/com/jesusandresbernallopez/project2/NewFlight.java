@@ -94,7 +94,6 @@ public class NewFlight extends AppCompatActivity implements View.OnClickListener
            AlertDialog dialog = builder.create();
            dialog.show();
 
-
         }
     }
 }

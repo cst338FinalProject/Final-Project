@@ -155,7 +155,7 @@ public class Database extends SQLiteOpenHelper {
                 "claimedSeats integer not null,\n" +
                 "primary key (name));";
 
-        db.execSQL(s); // crashed with no flights prior to adding this
+        db.execSQL(s);
 
         /**Project spec wants default generated flights**/
         s = "INSERT INTO flights (name, departLoc, destinLoc, departHour, departMin, flightCap, price, claimedSeats)" +
@@ -189,8 +189,6 @@ public class Database extends SQLiteOpenHelper {
                 "seatsReq    integer not null," +
                 "flight_name varchar(20),\n" +
                 "customer_id integer);"; //+
-//                "foreign key (flight_name) references flights (name) on delete cascade,\n" +
-//                "foreign key (customer_id) references customers (id) on delete cascade);";
 
         db.execSQL(s);
 

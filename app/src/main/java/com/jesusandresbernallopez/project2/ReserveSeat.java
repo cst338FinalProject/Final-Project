@@ -82,7 +82,6 @@ public class ReserveSeat extends AppCompatActivity implements View.OnClickListen
                 departure.getText().toString(),
                 arrival.getText().toString() , db);
 
-
         int total = 0;
         for(int i = 0; i < a.size(); i++){
             Button b = new Button(this);

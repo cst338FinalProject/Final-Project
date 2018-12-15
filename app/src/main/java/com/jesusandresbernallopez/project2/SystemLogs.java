@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 public class SystemLogs extends AppCompatActivity implements View.OnClickListener {
@@ -59,9 +58,9 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
             if (db.lookup(s) == null) {
                 throw new Exception("Found no flights");
             }
+
             Cursor c = db.lookup(s);
             ArrayList<String> list = new ArrayList<>();
-
             StringBuilder sb = new StringBuilder();
             int col = c.getColumnCount();
             int row = c.getCount();
@@ -81,6 +80,7 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
 
             c.close();
             db.close();
+
             for(int i = 0; i < list.size(); i++){
                 TextView t = new TextView(this);
                 t.setText(list.get(i));

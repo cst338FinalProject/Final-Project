@@ -14,16 +14,6 @@ package com.jesusandresbernallopez.project2;
 import android.database.Cursor;
 import android.util.Log;
 
-/**
- * "CREATE TABLE reservations(\n" +
- * "id          integer primary key autoincrement,\n" +
- * "seatsReq    integer not null," +
- * "flight_name varchar(20),\n" +
- * "customer_id integer,\n" +
- * "foreign key (flight_name) references flights (name) on delete cascade,\n" +
- * "foreign key (customer_id) references customers (id) on delete cascade);";
- **/
-
 class Reservation {
 
     public Reservation() {

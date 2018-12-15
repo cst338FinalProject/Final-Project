@@ -31,7 +31,6 @@ public class CancelReservation extends AppCompatActivity implements View.OnClick
 
         Button checkButton = findViewById(R.id.checkButton);
         checkButton.setOnClickListener(this);
-
     }
 
     @Override

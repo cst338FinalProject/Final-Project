@@ -73,6 +73,7 @@ public class CancelFlight extends AppCompatActivity implements View.OnClickListe
 
         ArrayList<String> list = getIntent().getExtras().getStringArrayList("list");
         for(int i = 0; i < list.size(); i++){
+
             Button b = new Button(this);
 
             StringTokenizer st = new StringTokenizer(list.get(i), ",");
@@ -82,7 +83,6 @@ public class CancelFlight extends AppCompatActivity implements View.OnClickListe
             b.setOnClickListener(this);
             layout.addView(b);
         }
-
 
         layout.setOnClickListener(this);
 
