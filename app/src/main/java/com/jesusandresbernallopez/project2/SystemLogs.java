@@ -68,7 +68,7 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
 
             for (int i = 0; i < row; i++) {
                 c.moveToNext();
-                for (int j = 0; j < col; j++) {
+                for (int j = 0; j < col - 1; j++) {
                     try {
                         sb.append(c.getString(j) + ",");
                     } catch (Exception e) {
