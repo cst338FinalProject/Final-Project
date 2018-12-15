@@ -200,24 +200,20 @@ public class Database extends SQLiteOpenHelper {
 
         db.execSQL(s);
 
-        s = "CREATE TRIGGER flight_mod AFTER UPDATE ON flights BEGIN INSERT INTO log(event, timestamp) VALUES('udpate flight', datetime('NOW')); END;";
-
+        s = "CREATE TRIGGER flight_mod AFTER UPDATE ON flights BEGIN INSERT INTO log(event, timestamp) VALUES(old.name || ' seats reserved changed from: ' || old.claimedSeats || ' to: ' || new.claimedSeats, datetime('NOW')); END;";
         db.execSQL(s);
 
         s = "CREATE TRIGGER res_mod AFTER UPDATE ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES('update reservation', datetime('NOW')); END;";
 
         db.execSQL(s);
 
-        s = "CREATE TRIGGER new_cust AFTER INSERT ON customers BEGIN INSERT INTO log(event, timestamp) VALUES ('new customer', datetime('NOW')); END;";
-
+        s = "CREATE TRIGGER new_cust AFTER INSERT ON customers BEGIN INSERT INTO log(event, timestamp) VALUES ('new customer: ' || new.username, datetime('NOW')); END;";
         db.execSQL(s);
 
-        s = "CREATE TRIGGER new_res AFTER INSERT ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES ('new reservation', datetime('NOW')); END;";
-
+        s = "CREATE TRIGGER new_res AFTER INSERT ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES( 'Customer: ' || CAST(new.customer_id AS VARCHAR) || ' booked flight: ' || new.flight_name || ' for: ' || CAST(new.seatsReq as VARCHAR) || ' tickets.', datetime('NOW')); END;";
         db.execSQL(s);
 
-        s = "CREATE TRIGGER new_flight AFTER INSERT ON flights BEGIN INSERT INTO log(event, timestamp) VALUES ('new flight', datetime('NOW')); END;";
-
+        s = "CREATE TRIGGER new_flight AFTER INSERT ON flights BEGIN INSERT INTO log(event, timestamp) VALUES ('New flight: ' || new.name || 'Depart from: ' || new.departLoc || ' Destination: ' || new.destinLoc || ' Flight time: ' || CAST(new.departHour AS VARCHAR) || CAST(new.departMin AS VARCHAR) || ' max capacity: ' || CAST(new.flightCap AS VARCHAR), datetime('NOW')); END;";
         db.execSQL(s);
 
         s = "CREATE TRIGGER del_cust AFTER DELETE ON customers BEGIN INSERT INTO log(event, timestamp) VALUES ('customer deleted', datetime('NOW')); END;";
@@ -228,8 +224,7 @@ public class Database extends SQLiteOpenHelper {
 
         db.execSQL(s);
 
-        s = "CREATE TRIGGER del_res AFTER DELETE ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES ('reservation deleted', datetime('NOW')); END;";
-
+        s = "CREATE TRIGGER del_res AFTER DELETE ON reservations BEGIN INSERT INTO log(event, timestamp) VALUES('Customer: ' || CAST(old.customer_id AS VARCHAR) || ' deleted reservation number: ' || CAST(old.id AS VARCHAR), datetime('NOW')); END;";
         db.execSQL(s);
     }
 

@@ -19,6 +19,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class SystemLogs extends AppCompatActivity implements View.OnClickListener {
 
@@ -51,24 +54,41 @@ public class SystemLogs extends AppCompatActivity implements View.OnClickListene
         layout.setLayoutParams(params);
 
         Database db = new Database(getBaseContext());
-        String s = "SELECT * FROM log";
-        Cursor c = db.lookup(s);
-        Button b = new Button(this);
-        b.setText("Hi");
-        b.setOnClickListener(this);
-        layout.addView(b);
-
-        int column = c.getColumnCount();
-        int row = c.getCount();
-
-        for(int i = 0; i < row; i++){
-            for(int j = 0; j < column; j++){
-                try{
-
-                }catch(Exception e){
-
-                }
+        String s = "SELECT * FROM log;";
+        try {
+            if (db.lookup(s) == null) {
+                throw new Exception("Found no flights");
             }
+            Cursor c = db.lookup(s);
+            ArrayList<String> list = new ArrayList<>();
+
+            StringBuilder sb = new StringBuilder();
+            int col = c.getColumnCount();
+            int row = c.getCount();
+
+            for (int i = 0; i < row; i++) {
+                c.moveToNext();
+                for (int j = 0; j < col; j++) {
+                    try {
+                        sb.append(c.getString(j) + ",");
+                    } catch (Exception e) {
+                        sb.append(Integer.toString(c.getInt(j)) + ",");
+                    }
+                }
+                list.add(sb.toString());
+                sb = new StringBuilder();
+            }
+
+            c.close();
+            db.close();
+            for(int i = 0; i < list.size(); i++){
+                TextView t = new TextView(this);
+                t.setText(list.get(i));
+                layout.addView(t);
+            }
+
+        } catch (Exception e) {
+            System.exit(2);
         }
 
         layout.setOnClickListener(this);
