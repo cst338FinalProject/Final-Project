@@ -39,12 +39,11 @@ class Reservation {
             String s = "INSERT INTO reservations (seatsReq, flight_name, customer_id) VALUES (" +
                     Integer.toString(numSeats) + ", '" + flightName + "', " + Integer.toString(cID) + ");";
 
-            boolean insert = db.insert(s);
             try{
                 String st = "UPDATE flights SET claimedSeats = (select claimedSeats from flights where name = '" + flightName + "'; + " + Integer.toString(numSeats) + ") WHERE name = '" + flightName + "';";
                 db.update(st);
             }catch (Exception e){
-                Log.d("blah", e.getLocalizedMessage());
+                Log.d("Error: ", e.getLocalizedMessage());
             }
 
             return db.insert(s);

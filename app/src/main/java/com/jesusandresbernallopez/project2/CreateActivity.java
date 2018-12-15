@@ -13,12 +13,16 @@ package com.jesusandresbernallopez.project2;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.ArrayList;
 
 public class CreateActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -59,6 +63,7 @@ public class CreateActivity extends AppCompatActivity implements View.OnClickLis
                 builder.setTitle("Success");
                 builder.setMessage("Your account was created.");
             }
+
 
             AlertDialog dialog = builder.create();
             dialog.show();
